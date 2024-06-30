@@ -1,0 +1,7 @@
+"error.object.name","code","name","description"
+"COMMUNICATION_ERROR","1000","Communication error","Generic communication error."
+"DESTINATION_COMMUNICATION_ERROR","1001","Destination communication error","Destination of the request failed to be reached. This usually indicates that a Peer FSP failed to respond from an intermediate entity."
+"GENERIC_SERVER_ERROR","2000","Generic server error","Generic server error to be used in order not to disclose information that may be considered private."
+"INTERNAL_SERVER_ERROR","2001","Internal server error","Generic unexpected exception. This usually indicates a bug or unhandled error case."
+"NOT_IMPLEMENTED","2002","Not implemented","Service requested is not supported by the server."
+"SERVICE_CURRENTLY_UNAVAILABLE","2003","Service currently unavailable","Service requested is currently unavailable on the server. This could be because maintenance is taking place, or because of a temporary failure."

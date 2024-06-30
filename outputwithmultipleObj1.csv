@@ -1,0 +1,4 @@
+"error.object.name","code","name","description"
+"GENERIC_PAYEE_REJECTION","5100","Generic Payee rejection","Payee or Payee FSP rejected the request."
+"GENERIC_PAYER_REJECTION","5200","Generic Payer rejection","Payer or Payer FSP rejected the request."
+"TIMEOUT_REJECTION","5300","Timeout rejection","The request timed out."

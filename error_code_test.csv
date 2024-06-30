@@ -1,0 +1,4 @@
+"error.object.name","code","name","description"
+"COMMUNICATION_ERROR","1000","Communication error","Generic communication error."
+"DESTINATION_COMMUNICATION_ERROR","1001","Destination communication error","Destination of the request failed to be reached. This usually indicates that a Peer FSP failed to respond from an intermediate entity."
+"GENERIC_SERVER_ERROR","2000","Generic server error","Generic server error to be used in order not to disclose information that may be considered private."
