@@ -3,6 +3,7 @@ library(skimr)
 library(janitor)
 library(ggplot2)
 library(dplyr)
+library(geosphere)
 #importind data from csv
 ride_data_df <- read_csv("D:/google_data_course/R_basic_exercises/case study/datasets/202006-divvy-tripdata/202004-divvy-tripdata.csv")
 
@@ -26,18 +27,31 @@ print(group_counts)
 
 #adding time taken column
 ride_data_df<- ride_data_df %>% 
-  mutate(total_time_taken = difftime(ended_at, started_at, units = "mins")) %>% 
+  #mutate(total_time_taken = difftime(ended_at, started_at, units = "mins")) %>% 
+  mutate(total_min_as_num= as.numeric(total_time_taken)) %>% 
   arrange(total_time_taken)
 
 #checking total tile taken 
 ride_data_df <-  ride_data_df %>% 
   filter(total_time_taken > 0)
-ride_data_df
+ride_data_df %>% 
+  select(ride_id, ended_at, started_at, total_time_taken, total_min_as_num) %>% 
+  arrange(-total_time_taken)
 
+str(ride_data_df)
+# dropping a column from dataframe
+#ride_data_df <- subset(ride_data_df, select = -total_min_as_num)
 
 #Pipe funtion control + shift + m for pipe operator [filter, group by and then summarized]
-ride_data_df_summary <- ride_data_df %>%  
-  group_by(member_casual) %>% 
-  summarize(ride_count = n(),mean_time_taken = mean(total_time_taken, na.rm = T), total_time_taken = sum(total_time_taken, na.rm = T), max_time_taken = max(total_time_taken, na.rm = T),min_time_taken = min(total_time_taken, na.rm = T) )
-#na.rm = TRUE: This tells R to remove (ignore) any missing values (NAs) in the vector before calculating the mean
-print(ride_data_df_summary)
+ride_data_df %>%
+  group_by(member_casual) %>%
+  summarize(
+    min_value = min(total_min_as_num),
+    max_value = max(total_min_as_num),
+    total_value = sum(total_min_as_num),
+    count = n()
+  )
+# calculation distance information and adding that as a column in dataframe distGeo(df[, c("lon", "lat")])
+#ride_data_df<- ride_data_df %>% 
+  #mutate(total_time_taken = difftime(ended_at, started_at, units = "mins")) %>% 
+  # mutate(total_distance= distGeo(ride_data_df[, ride_data_df("start_lng", "start_lat")])) %>% 
