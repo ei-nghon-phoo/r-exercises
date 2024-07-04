@@ -51,7 +51,27 @@ ride_data_df %>%
     total_value = sum(total_min_as_num),
     count = n()
   )
-# calculation distance information and adding that as a column in dataframe distGeo(df[, c("lon", "lat")])
-#ride_data_df<- ride_data_df %>% 
-  #mutate(total_time_taken = difftime(ended_at, started_at, units = "mins")) %>% 
-  # mutate(total_distance= distGeo(ride_data_df[, ride_data_df("start_lng", "start_lat")])) %>% 
+
+# Function to calculate distance using geodist
+calculate_distance_km <- function(lat1, lon1, lat2, lon2) {
+  coords1 <- cbind(lon1, lat1)
+  coords2 <- cbind(lon2, lat2)
+  dist_km <- geodist(coords1, coords2, measure = "geodesic") / 1000
+  return(dist_km)
+}
+
+#adding distance column 
+ride_data_df_distance<- ride_data_df %>% 
+  mutate(distance = mapply(calculate_distance_km, start_lat, start_lng, end_lat, end_lng)) %>% 
+  arrange(distance)
+
+ride_data_df_distance %>% 
+  arrange(-distance) %>% s
+  select(ride_id,total_time_taken, distance, started_at,ended_at) 
+
+
+#histogram for distance
+library(ggplot2)
+ggplot(ride_data_df_distance, aes(x = distance)) +
+  geom_histogram(binwidth = 2, fill = "blue", color = "black") +
+  labs(title = "Histogram of distance for each ride", x = "Distances", y = "Frequency") + facet_wrap(~ member_casual)
